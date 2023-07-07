@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Pig Latin</title>
+</head>
+<body>
+    <input type="text" id="userInput"> <br> pig latin: <span id="pigOutput"></span>
+
+    <script>
+        // Script written by Sarah Keane on July 6th, 2023
+
+        // Declare vowels variable, which is a string containing all upper case and lower case vowels
+        // This allows us to check if a letter is a vowel by using the .includes() method on the vowels string
+        let vowels = "aeiouAEIOU"
+
+        // When a user enters any text, call this function
+        userInput.oninput = function() {
+            // Declare local variables
+            let myText = userInput.value // Contains the value of the input text
+            let pigText = '' // Placeholder for pig latin output
+
+            if (myText.length <= 1) {
+                // string contains one letter or less (invalid)
+                pigText = "Invalid input, word must contain more than one letter."
+
+            } else if (!vowels.includes(myText.charAt(0)) && !vowels.includes(myText.charAt(1))) {
+                // first two letters are consonants (not vowels)
+                pigText = myText.slice(2) + myText.slice(0, 2) + 'ay'
+                
+            } else if (!vowels.includes(myText.charAt(0))) {
+                // first letter is a consonant
+                pigText = myText.slice(1) + myText.charAt(0) + 'ay'
+
+            } else {
+                // first letter is a vowel
+                pigText = myText + 'way'
+            }
+
+            // Overwrite pigOutput span text
+            pigOutput.innerHTML = pigText;
+        };
+
+    </script>
+
+
+</body>
+</html>
