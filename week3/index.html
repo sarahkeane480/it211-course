@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>week3</title>
+</head>
+<body>
+    <!-- Span displaying the amount of students -->
+    <span id="students-amount">Amount of students goes here</span><hr>
+    <!-- Table displaying student grades -->
+    <table id="grade-table">
+        <tr>
+            <th>Student</th>
+            <th>Grade</th>
+        </tr>
+    </table>
+    <hr>
+    <!-- Table displaying overview of student grades -->
+    <table id="grade-summary">
+        <tr>
+            <th>Highest</th>
+            <th>Lowest</th>
+            <th>Average</th>
+        </tr>
+    </table>
+
+
+    <script>
+        let gradesRaw = "jim|25, sue|32, mary|34, ann|22, ted|28, frank|15, lisa|19, mike|30, ahn|26, vishaya|27";
+        let grades = []
+        const gradeTable = document.getElementById('grade-table')
+        const gradeSummary = document.getElementById('grade-summary')
+
+        // Function for parsing each individual grade
+        function parseGrade(str){
+            let [student, grade] = str.split('|')
+
+            // Capitalize first letter of student name
+            student = student[0].toUpperCase() + student.slice(1)
+            // Convert grade to integer
+            grade = parseInt(grade)
+
+            return [student, grade]
+        }
+
+        // Split up grades and use parseGrade on each, and push the return values to the grades array
+        for (let str of gradesRaw.split(', ')) {
+            grades.push(parseGrade(str))
+        }
+
+        // Get total number of students
+        document.getElementById('students-amount').innerHTML = `Amount of students: ${grades.length}`
+
+
+        // Sort by alphabetical order
+        grades.sort()
+
+        // Append table elements for each student's grade
+        for (let [student, grade] of grades) {
+            let tr = document.createElement('tr')
+
+            studentTd = document.createElement('td')
+            studentTd.innerHTML = student
+            tr.appendChild(studentTd)
+
+            gradeTd = document.createElement('td')
+            gradeTd.innerHTML = grade
+            tr.appendChild(gradeTd)
+
+            gradeTable.appendChild(tr)
+        }
+
+
+        // Add table elements for highest, lowest, and average grade
+        function getGradeSummary() {
+            let tr = document.createElement('tr');
+            let highest, lowest;
+            let average = 0;
+            // Get the scores from the grades only, using map. Then, sort by lowest to highest
+            let scores = grades.map(a => a[1]).sort((a, b) => a - b);
+
+            // Get lowest and highest
+            lowest = scores[0]
+            highest = scores[scores.length-1]
+
+            // Calculate average
+            for (let score of scores) {
+                average += score
+            }
+            average = average / scores.length
+            
+            // Append each value to the table row
+            for (let score of [highest, lowest, average]) {
+                let td = document.createElement('td')
+                td.innerHTML = score
+                tr.appendChild(td)
+            }
+
+            gradeSummary.appendChild(tr)
+        }
+
+        getGradeSummary()
+
+
+
+
+    </script>
+</body>
+</html>
