@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+</head>
+<body>
+
+<h1>Functions & validation</h1>
+
+<form id="form1" action="#" onsubmit="return validateForm(this);">
+  first name: <input type="text" name="firstname"><br>
+  last name: <input type="text" name="lastname"><br>
+  password: <input type="text" name="password"><br>
+
+  <button >Check</button>
+</form>
+
+<hr><div id="message"></div>
+
+<script>
+
+// add validatePassword function here
+
+function validatePassword(str) {
+  // return false if str is less than 8 characters
+  if (str.length < 8) {
+    return false;
+  }
+
+  // default lower and upper to false, to set to true if a lower/upper case char exists
+  let lower = false;
+  let upper = false;
+  for (char of str) {
+    if (char == char.toUpperCase()) {
+      upper = true;
+    } else {
+      lower = true;
+    }
+  }
+
+  // return true if both lower and upper case characters exist
+  if (lower && upper) {
+    return true
+  } else {
+    return false
+  }
+}
+
+
+
+const validateForm = (myForm) => {
+  /* Form validation code goes here
+  */
+
+  // get values from form entries
+  let firstname = myForm.firstname.value; // get text of firstname field
+  let lastname = myForm.lastname.value; // get text of lastname field
+  let password = myForm.password.value; // get text of password field
+
+  // update message div with whether the user's input is valid 
+  if (firstname == "") {
+    // valid if firstname is not empty
+    $("#message").html("Invalid: First Name does not exist!");
+
+  } else if (lastname == "") {
+    // valid if lastname is not empty
+    $("#message").html("Invalid: Last name does not exist!");
+
+  } else if (!validatePassword(password)) {
+    // check password with validatePassword
+    $("#message").html("Invalid: Password must be 8 or more characters, and include an upper and lower case character!");
+
+  } else {
+    // input is valid!
+    $("#message").html("Login valid!");
+  }
+
+  return false; // prevent page reload
+}
+
+</script>
+
+</body>
+</html>
