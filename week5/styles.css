@@ -1,0 +1,16 @@
+ul#card_hand li {
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 5px;
+    margin: 5px;
+    width: 130px;
+    min-height: 150px;
+    display: inline-block;
+}
+
+ul#card_hand li img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

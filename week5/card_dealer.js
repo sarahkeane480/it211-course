@@ -66,7 +66,8 @@ function dealHand(deck) {
     for (let i = 0; i < 5; i++){
         // ...only if cards remain
         if (deck.length != 0) {
-            hand.push(`<li>${drawCard(deck).name}</li>`)
+            let card = drawCard(deck).name
+            hand.push(`<li>${card}<br><img src="img/${card}.png"></li>`)
         }
     }
     
