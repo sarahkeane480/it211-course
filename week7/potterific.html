@@ -1,0 +1,132 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+    <style>
+        .over {
+            background-color: orange;
+        }
+        .selected {
+            background-color: green;
+        }
+    </style>
+
+    <body>
+        <div id="buttons"></div>
+        <table border='1' id="characters">
+            <tr>
+                <th>name</th>
+                <th>role</th>
+                <th>house</th>
+                <th>gender</th>
+                <th>alignment</th>
+            </tr>
+        </table>
+        <button id="reset">reset</button>
+        <button class="Gryffindor">Gryffindor</button>
+        <button class="Hufflepuff">Hufflepuff</button>
+        <button class="Slytherin">Slytherin</button>
+        <button class="Ravenclaw">Ravenclaw</button>
+    </body>
+        
+        <script>
+        // list of characters
+        let characters = [
+        {name:"Albus Dumbledore", role:"staff", house:"Gryffindor",gender:"m",alignment:"good"},    
+        {name:"Nymphadora Tonks", role:"", house:"Hufflepuff",gender:"f",alignment:"good"},    
+        {name:"Ron Weasley", role:"student", house:"Gryffindor",gender:"m",alignment:"good"},    
+        {name:"Ginny Weasley", role:"student", house:"Gryffindor",gender:"f",alignment:"good"},    
+        {name:"Hermione Granger", role:"student", house:"Gryffindor",gender:"f",alignment:"good"},    
+        {name:"Mad-eye Moody", role:"staff", house:"",gender:"m",alignment:"good"},    
+        {name:"Prof McGonagall", role:"staff", house:"Gryffindor",gender:"f",alignment:"good"},    
+        {name:"Harry Potter", role:"student", house:"Gryffindor",gender:"m",alignment:"good"},    
+        {name:"Draco Malfoy", role:"student", house:"Slytherin",gender:"m",alignment:"evil"},    
+        {name:"Hagrid", role:"staff", house:"Gryffindor",gender:"m",alignment:"good"},    
+        {name:"Luna Lovegood", role:"student", house:"Ravenclaw",gender:"f",alignment:"good"},    
+        {name:"Voldemort", role:"", house:"Slytherin",gender:"m",alignment:"evil"},    
+        {name:"Bellatrix Lestrange", role:"", house:"Slytherin",gender:"f",alignment:"evil"},           
+        {name:"Severus Snape", role:"staff", house:"Slytherin",gender:"m",alignment:"?"}
+        ];
+
+        $(document).ready(function(){
+
+        /*
+        - add a button for each 'house' value
+        - add table row for each character
+        - set visible rows to alternating background color
+            
+        - add click handler to show only rows matching selected 'house'. Enable buttons to call this handler. 
+        
+        - add click handler to reset table 
+        */      
+            let houses = ['Gryffindor','Hufflepuff','Slytherin','Ravenclaw'] 
+            // get table with id of characters
+            const table = 'table#characters'
+
+            fillTable(table, characters)
+
+            // filterTableByHouse(table, 'Slytherin')
+
+            for (let house of houses) {
+                $(`button.${house}`).click(function() {
+                    filterTableByHouse(table, house)
+                })
+            }
+
+            $('button#reset').click(function() {
+                fillTable(table, characters)
+            })
+
+        });
+
+
+        // Fill table with character info
+        function fillTable(table, characters) {
+            const fields = ['name', 'role', 'house', 'gender', 'alignment']
+
+            $(table).html(`            <tr>
+                <th>name</th>
+                <th>role</th>
+                <th>house</th>
+                <th>gender</th>
+                <th>alignment</th>
+            </tr>`)
+
+            // create a new row element for each character's info
+            for (let character of characters) {
+                let $row = $('<tr></tr>')
+                // console.log(character)
+
+                for (let field of fields) {
+                    // console.log(field, character[field])
+                    $row.append(`<td>${character[field]}</td>`)
+                }
+
+                $(table).append($row)
+            }
+        }
+
+        // Filter rows
+        function filterTableByHouse(table, houseToFilter) {
+            // fillTable(table, characters)
+
+            $(table).find("tr").filter(function () {
+                let house = $('td:nth-child(3)', this).text()
+                console.log(house)
+                return house != houseToFilter
+            }).html('')
+            $(table).prepend(`            <tr>
+                <th>name</th>
+                <th>role</th>
+                <th>house</th>
+                <th>gender</th>
+                <th>alignment</th>
+            </tr>`)
+        }
+
+
+
+
+
+        </script>
+</html>
